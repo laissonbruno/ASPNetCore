@@ -2,6 +2,7 @@
 using FilmesAPI.Data;
 using FilmesAPI.Data.Dtos;
 using FilmesAPI.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilmesAPI.Controllers;
@@ -15,17 +16,14 @@ public class FilmeController : ControllerBase
     private FilmeContext _context;
     private IMapper _mapper;
 
-    public FilmeController(IMapper mapper)
+    public FilmeController(FilmeContext context, IMapper mapper)
     {
+        _context = context;
         _mapper = mapper;
     }
 
-    public FilmeController(FilmeContext context)
-    {
-        _context = context;
-    }
-
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     public IActionResult AdicionaFilme([FromBody]CreateFilmeDto filmeDto)
     {        
         {
@@ -37,9 +35,9 @@ public class FilmeController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Filme> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 50)
+    public IEnumerable<ReadFilmeDto> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return _context.Filmes.Skip(skip).Take(take);
+        return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take));
     }
 
     [HttpGet("{id}")]
@@ -47,7 +45,52 @@ public class FilmeController : ControllerBase
     {
        var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
         if (filme == null) return NotFound();
-        return Ok();
+        var filmeDto = _mapper.Map<ReadFilmeDto>(filme);
+        return Ok(filmeDto);
     }
+
+
+    [HttpPut("{id}")]
+    public IActionResult AtualizaFilme(int id, [FromBody] UpdateFilmeDto filmeDto)
+    {
+        var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+        if (filme == null) return NotFound();
+        _mapper.Map(filmeDto, filme);
+        _context.SaveChanges();
+        return NoContent();
+    }
+
+    [HttpPatch("{id}")]
+    public IActionResult AtualizaFilmePatch(int id, JsonPatchDocument<UpdateFilmeDto> patch)
+    {
+        var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+        if (filme == null) return NotFound();
+
+        var filmeAtualiza = _mapper.Map<UpdateFilmeDto>(filme);
+
+        patch.ApplyTo(filmeAtualiza, ModelState);
+        if (!TryValidateModel(filmeAtualiza))
+        {
+            return ValidationProblem(ModelState);
+        }
+            
+
+        _mapper.Map(filmeAtualiza, filme);
+        _context.SaveChanges();
+        return NoContent();
+    }
+
+
+    [HttpDelete("{id}")]
+    public IActionResult DeletaFilme(int id)
+    {
+        var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+        if (filme == null) return NotFound();
+
+        _context.Remove(filme);
+        _context.SaveChanges();
+        return NoContent();
+    }
+
 
 }
