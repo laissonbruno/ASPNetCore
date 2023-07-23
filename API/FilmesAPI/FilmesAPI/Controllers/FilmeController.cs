@@ -37,7 +37,7 @@ public class FilmeController : ControllerBase
     [HttpGet]
     public IEnumerable<ReadFilmeDto> RecuperaFilmes([FromQuery] int skip = 0, [FromQuery] int take = 50)
     {
-        return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take));
+        return _mapper.Map<List<ReadFilmeDto>>(_context.Filmes.Skip(skip).Take(take).ToList());
     }
 
     [HttpGet("{id}")]
@@ -48,7 +48,6 @@ public class FilmeController : ControllerBase
         var filmeDto = _mapper.Map<ReadFilmeDto>(filme);
         return Ok(filmeDto);
     }
-
 
     [HttpPut("{id}")]
     public IActionResult AtualizaFilme(int id, [FromBody] UpdateFilmeDto filmeDto)
@@ -72,9 +71,7 @@ public class FilmeController : ControllerBase
         if (!TryValidateModel(filmeAtualiza))
         {
             return ValidationProblem(ModelState);
-        }
-            
-
+        }          
         _mapper.Map(filmeAtualiza, filme);
         _context.SaveChanges();
         return NoContent();
