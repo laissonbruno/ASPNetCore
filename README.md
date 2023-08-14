@@ -1,4 +1,43 @@
-# Projeto de API com ASP .NET 6
+# ASP .NET 6 API Project ||||| EN
+
+## AutoMapper.Extensions.Microsoft.DependencyInjection
+
+The `AutoMapper.Extensions.Microsoft.DependencyInjection` package is an extension for AutoMapper that enables seamless and efficient integration of AutoMapper with the ASP.NET Core dependency injection system (Microsoft.Extensions.DependencyInjection). AutoMapper is a library that simplifies the mapping between Data Transfer Objects (DTOs) and domain models, saving time and eliminating repetitive code.
+
+## Microsoft.AspNetCore.Authentication.JwtBearer
+
+The `Microsoft.AspNetCore.Authentication.JwtBearer` package provides support for JSON Web Token (JWT) based authentication in ASP.NET Core applications. It allows you to validate and process JWT tokens sent by clients to authenticate requests, providing a robust security layer for your APIs.
+
+## Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+The `Microsoft.AspNetCore.Identity.EntityFrameworkCore` package is essential when building authentication and authorization systems in ASP.NET Core applications. It allows integration of ASP.NET Core Identity with Entity Framework Core, simplifying user, password, and permission management in your application.
+
+## Microsoft.EntityFrameworkCore.Tools
+
+The `Microsoft.EntityFrameworkCore.Tools` package offers command-line tools for Entity Framework Core. With these tools, you can efficiently create and apply database migrations, aiding in managing database schema changes over time.
+
+## Microsoft.Extensions.Identity.Stores
+
+The `Microsoft.Extensions.Identity.Stores` package extends identity information storage capabilities in ASP.NET Core Identity. It provides interfaces and implementations that can be customized to store identity data, such as users and logins, in different data sources like databases or file systems.
+
+## Pomelo.EntityFrameworkCore.MySql
+
+The `Pomelo.EntityFrameworkCore.MySql` package is an Entity Framework Core provider for MySQL. It allows you to connect to MySQL databases and efficiently perform database operations using the powerful Object-Relational Mapping (ORM) provided by Entity Framework Core.
+
+## Swashbuckle.AspNetCore
+
+The `Swashbuckle.AspNetCore` package simplifies the generation of interactive documentation for your ASP.NET Core APIs. It integrates Swagger UI, which automatically generates a user interface to explore and test your APIs, making it easier to understand the available functionalities.
+
+## System.IdentityModel.Tokens.Jwt
+
+The `System.IdentityModel.Tokens.Jwt` package provides classes for handling JWT tokens. It enables creation, validation, and manipulation of JWT tokens, which are often used for authenticating and authorizing requests in distributed systems and APIs.
+
+Make sure to refer to the official documentation of each package for detailed information on how to use them in your project.
+
+---
+
+# Projeto de API com ASP .NET 6 ||||| PT-BR
+
 
 ## AutoMapper.Extensions.Microsoft.DependencyInjection
 
